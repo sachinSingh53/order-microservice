@@ -1,6 +1,6 @@
 import { publishDirectMessage } from '../queues/order-producer.js';
 import { OrderModel } from '../models/order.js'
-import { orderChannel } from '../app';
+import { orderChannel } from '../app.js';
 import { lowerCase } from '../../../9-jobber-shared/src/helper.js';
 import config from '../config.js';
 import { sendNotification } from './notification-service.js';
@@ -150,7 +150,7 @@ const approveOrder = async (orderId, data) => {
 
 }
 
-const deliverOrder = async (orderId, delivered, deliveredWork) => {
+const sellerDeliverOrder = async (orderId, delivered, deliveredWork) => {
     const order = await OrderModel.findOneAndUpdate(
         { orderId },
         {
@@ -384,7 +384,7 @@ export {
     createOrder,
     cancelOrder,
     approveOrder,
-    deliverOrder,
+    sellerDeliverOrder,
     requestDeliveryExtension,
     approveDeliveryDate,
     rejectDeliveryDate,

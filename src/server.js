@@ -12,6 +12,8 @@ import { appRoutes } from './routes.js';
 import { checkConnection } from './elasticsearch.js';
 import { createConnection } from './queues/connection.js';
 import { Server } from 'socket.io';
+import { consumerReviewFanoutMessages } from './queues/order-consumer.js';
+import { channel } from 'diagnostics_channel';
 
 
 const log = winstonLogger('OrderServer', 'debug');
@@ -47,8 +49,7 @@ function routesMiddleware(app) {
 async function startQueues() {
     try {
         const orderChannel = await createConnection();
-        // await consumeGigDirectMessage(gigChannel);
-        // await consumeSeedDirectMessage(gigChannel);
+        await consumerReviewFanoutMessages(orderChannel);
         return orderChannel;
 
     } catch (error) {

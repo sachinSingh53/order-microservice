@@ -14,6 +14,7 @@ class Config {
         this.CLOUD_NAME = process.env.CLOUD_NAME || '';
         this.CLOUD_API_KEY = process.env.CLOUD_API_KEY || '';
         this.CLOUD_API_SECRET = process.env.CLOUD_API_SECRET || '';
+        this.STRIPE_API_KEY = process.env.STRIPE_API_KEY || '';
     }
 
     cloudinaryConfig() {

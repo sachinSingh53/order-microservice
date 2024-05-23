@@ -1,5 +1,6 @@
-import {OrderNotificationModel} from '../models/notification';
-import{socketIoOrderObject} from '../app';
+import {OrderNotificationModel} from '../models/notification.js';
+import{socketIoOrderObject} from '../app.js';
+import { getOrderByOrderId } from './order-service.js';
 
 const createNotification = async(data)=>{
     const notification = await OrderNotificationModel.create(data);
@@ -26,6 +27,11 @@ const markNotificationAsRead = async(notificationId)=>{
         },
         {new: true}
     )
+
+    //we are doing it to update data on frontend
+
+    const order = await getOrderByOrderId(notification.orderId);
+    socketIoOrderObject.emit('order notification',order,notification);
 
     return notification;
 };
