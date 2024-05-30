@@ -13,7 +13,7 @@ import { checkConnection } from './elasticsearch.js';
 import { createConnection } from './queues/connection.js';
 import { Server } from 'socket.io';
 import { consumerReviewFanoutMessages } from './queues/order-consumer.js';
-import { channel } from 'diagnostics_channel';
+
 
 
 const log = winstonLogger('OrderServer', 'debug');
@@ -102,7 +102,7 @@ function startServer(app) {
     try {
         const httpServer = new http.Server(app);
         startHttpServer(httpServer);
-        const socketIO =  createSocketIo(httpServer);
+        const socketIO = createSocketIo(httpServer);
         return socketIO;
 
     } catch (err) {
@@ -120,7 +120,7 @@ async function start(app) {
     errorHandler(app);
     const socketIoOrderObject = startServer(app);
 
-    return {orderChannel,socketIoOrderObject};
+    return { orderChannel, socketIoOrderObject };
 }
 
 

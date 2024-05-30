@@ -20,6 +20,7 @@ const cancel = async(req,res)=>{
     const {orderId} = req.params;
 
     await cancelOrder(orderId,req.body.orderData);
+    res.status(StatusCodes.OK).json({ message: 'Order cancelled successfully.'});
 }
 
 const requestExtension = async(req,res)=>{
@@ -75,7 +76,7 @@ const deliverOrder = async(req,res)=>{
     const randomCharacters = crypto.randomBytes(20).toString('hex');
 
     if(file){
-        const result = req.fileType === 'zip' ? await uploads(file,`${randomCharacters}.zip`): uploads(file);
+        const result = req.fileType === 'zip' ? await uploads(file,`${randomCharacters}.zip`): await uploads(file);
         if(!result.public_id){
             throw new BadRequestError('File upload error ','update deliverOrder() method'); 
         }
@@ -92,6 +93,7 @@ const deliverOrder = async(req,res)=>{
     }
 
     const order = await sellerDeliverOrder(orderId,true,deliverWork);
+    res.status(StatusCodes.OK).json({ message: 'Order delivered successfully.', order });
     
 }
 export {

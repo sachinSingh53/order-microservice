@@ -3,7 +3,7 @@ import { buyerOrders, orderId, sellerOrders } from '../controllers/order/get.js'
 import { intent, order } from '../controllers/order/create.js';
 import { buyerApproveOrder, cancel, deliverOrder, deliveryDate, requestExtension } from '../controllers/order/update.js';
 import{notifications } from '../controllers/notification/get.js'
-import { markNotificationAsRead } from '../services/notification-service.js';
+import{markNotification} from '../controllers/notification/update.js'
 const router = express.Router();
 const orderRoutes = ()=>{
 
@@ -21,7 +21,7 @@ const orderRoutes = ()=>{
     
     //notification-routes
     router.get('/notification/:userTo',notifications);
-    router.put('/noitification/marked-as-read',markNotificationAsRead);
+    router.put('/noitification/marked-as-read',markNotification);
 
 
 
