@@ -15,9 +15,9 @@ const orderRoutes = ()=>{
     router.post('/create-payment-intent',intent);
     router.put('/cancel/:orderId',cancel);
     router.put('/extension/:orderId',requestExtension);
-    router.put('/deliver-order/:orderId/:type',deliverOrder);
-    router.put('/approve-order/:orderId',buyerApproveOrder);
     router.put('/gig/:type/:orderId',deliveryDate);
+    router.put('/deliver-order/:orderId',deliverOrder);
+    router.put('/approve-order/:orderId',buyerApproveOrder);
     
     //notification-routes
     router.get('/notification/:userTo',notifications);

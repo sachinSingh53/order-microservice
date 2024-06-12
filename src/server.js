@@ -38,8 +38,11 @@ function securityMiddleware(app) {
 
 function standardMiddleware(app) {
     app.use(compression());
+
     app.use(bodyParser.json({ limit: '200mb' }));
     app.use(bodyParser.urlencoded({ extended: true, limit: '200mb' }));
+
+    
 }
 
 function routesMiddleware(app) {

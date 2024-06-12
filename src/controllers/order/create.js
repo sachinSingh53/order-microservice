@@ -7,11 +7,18 @@ import{createOrder} from '../../services/order-service.js'
 const stripe = new Stripe(config.STRIPE_API_KEY);
 
 const intent = async (req, res) => {
-    const customer = await stripe.customers.search({
-        query: `email:"${req.currentUser?.email}"`
-    });
+
+
+    const customer = []
+
+
+    // this search functionality is not available in INDIA
+    
+    // const customer = await stripe.customers.search({
+    //     query: `email:"${req.currentUser?.email}"`
+    // });
     let customerId = '';
-    if (!customer.data.length) {
+    if (!customer.data?.length) {
         const createdCustomer = await stripe.customers.create({
             email: req.currentUser?.email,
             metadata: {
@@ -50,10 +57,10 @@ const intent = async (req, res) => {
 }
 
 const order = async(req,res)=>{
-    const {error} = orderSchema.validate(req.body);
-    if(error?.details){
-        throw new BadRequestError(error.details[0].message, ' Create order() method error');
-    }
+    // const {error} = orderSchema.validate(req.body);
+    // if(error?.details){
+    //     throw new BadRequestError(error.details[0].message, ' Create order() method error');
+    // }
 
     const price = parseInt(req.body.price);
     const serviceFee = price<50 ? 5.5*price/100+50 : 5.5*price/100;

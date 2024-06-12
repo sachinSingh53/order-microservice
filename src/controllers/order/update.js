@@ -13,9 +13,10 @@ import{uploads} from '../../../../9-jobber-shared/src/cloudinaryUploader.js'
 const stripe = new Stripe(config.STRIPE_API_KEY);
 
 const cancel = async(req,res)=>{
-    await stripe.refunds.create({
-        payment_intent: `${req.body.payment_intent}`
-    })
+    
+    // await stripe.refunds.create({
+    //     payment_intent: `${req.body.payment_intent}`
+    // })
 
     const {orderId} = req.params;
 
@@ -46,7 +47,7 @@ const deliveryDate = async(req,res)=>{
 
     const {orderId,type} = req.params;
 
-    const order = type==='approve'? await approveDeliveryDate(orderId,req.body) : await rejectDeliveryDate(orderId);
+    const order = type === 'approve'? await approveDeliveryDate(orderId,req.body) : await rejectDeliveryDate(orderId);
     
     res.status(StatusCodes.OK).json({
         message:'Order delivery date extension',
@@ -54,11 +55,6 @@ const deliveryDate = async(req,res)=>{
     })
 }
 const buyerApproveOrder = async(req,res)=>{
-    const {error} = orderUpdateSchema.validate(req.body);
-    if(error?.details){
-        throw new BadRequestError(error.details[0].message, ' update approveOrder() method error');
-    }
-
     const {orderId} = req.params;
 
     const order = await approveOrder(orderId,req.body);
@@ -83,6 +79,7 @@ const deliverOrder = async(req,res)=>{
         file = result?.secure_url;
     }
 
+
     const deliverWork = {
         message:req.body.message,
         file,
@@ -91,6 +88,8 @@ const deliverOrder = async(req,res)=>{
         fileName:req.body.fileName,
 
     }
+
+    
 
     const order = await sellerDeliverOrder(orderId,true,deliverWork);
     res.status(StatusCodes.OK).json({ message: 'Order delivered successfully.', order });

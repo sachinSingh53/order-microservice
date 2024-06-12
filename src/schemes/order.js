@@ -23,7 +23,7 @@ const orderSchema = Joi.object().keys({
     buyerId: Joi.string().required(),
     buyerUsername: Joi.string().required(),
     buyerEmail: Joi.string().required(),
-    buyerImage: Joi.string().required(),
+    // buyerImage: Joi.string().required(),
     status: Joi.string().required(),
     orderId: Joi.string().required(),
     invoiceId: Joi.string().required(),

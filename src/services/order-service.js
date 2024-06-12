@@ -38,6 +38,8 @@ const createOrder = async (data) => {
     );
 
     const emailMessageDetails = {
+        buyerEmail:data.buyerEmail,
+        sellerEmail:data.sellerEmail,
         orderId: data.orderId,
         invoiceId: data.invoiceId,
         orderDue: `${data.offer.newDeliveryDate}`,
@@ -123,7 +125,7 @@ const approveOrder = async (orderId, data) => {
         completedJobs: data.completedJobs,
         totalEarnings: data.totalEarnings, // this is the price the seller earned for lastest order delivered
         recentDelivery: `${new Date()}`,
-        type: 'approve-order'
+        type: 'aprove-order'
     }
 
 
@@ -132,7 +134,7 @@ const approveOrder = async (orderId, data) => {
         orderChannel,
         'jobber-seller-updates',
         'user-seller',
-        JSON.stringify(JSON.stringify(messageDetails)),
+        JSON.stringify(messageDetails),
         'Approved order details sent to users service.'
     );
 
@@ -172,19 +174,18 @@ const sellerDeliverOrder = async (orderId, delivered, deliveredWork) => {
             orderId,
             buyerUsername: lowerCase(order.buyerUsername),
             sellerUsername: lowerCase(order.sellerUsername),
+            receiverEmail: order.buyerEmail,
             title: order.offer.gigTitle,
             description: order.offer.description,
             orderUrl: `${config.CLIENT_URL}/orders/${orderId}/activities`,
             template: 'orderDelivered'
         }
-
-
         //send email
         publishDirectMessage(
             orderChannel,
             'jobber-order-notification',
             'order-email',
-            JSON.stringify(JSON.stringify(messageDetails)),
+            JSON.stringify(messageDetails),
             'Order devivered notification sent to notification service'
         );
 
@@ -214,7 +215,7 @@ const requestDeliveryExtension = async (orderId, data) => {
     );
 
     if (order) {
-
+    
         const messageDetails = {
             buyerUsername: lowerCase(order.buyerUsername),
             sellerUsername: lowerCase(order.sellerUsername),
@@ -222,6 +223,7 @@ const requestDeliveryExtension = async (orderId, data) => {
             newDate: order.offer.newDeliveryDate,
             reason: order.offer.reason,
             orderUrl: `${config.CLIENT_URL}/orders/${orderId}/activities`,
+            receiverEmail: order.buyerEmail,
             template: 'orderExtension'
         }
 
@@ -231,7 +233,7 @@ const requestDeliveryExtension = async (orderId, data) => {
             orderChannel,
             'jobber-order-notification',
             'order-email',
-            JSON.stringify(JSON.stringify(messageDetails)),
+            JSON.stringify(messageDetails),
             'Order devivered notification sent to notification service'
         );
 
@@ -271,11 +273,12 @@ const approveDeliveryDate = async (orderId, data) => {
         const messageDetails = {
             buyerUsername: lowerCase(order.buyerUsername),
             sellerUsername: lowerCase(order.sellerUsername),
+            receiverEmail: order.sellerEmail,
             originalDate: order.offer.oldDeliveryDate,
             newDate: order.offer.newDeliveryDate,
             reason: order.offer.reason,
             orderUrl: `${config.CLIENT_URL}/orders/${orderId}/activities`,
-            template: 'orderExtension'
+            template: 'orderExtensionApproval'
         };
         // send email
         await publishDirectMessage(

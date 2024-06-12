@@ -10,17 +10,17 @@ const orderId = async(req,res)=>{
     })
 }
 const sellerOrders = async(req,res)=>{
-    const order = await getOrdersBySellerId(req.params.sellerId);
+    const orders = await getOrdersBySellerId(req.params.sellerId);
     res.status(StatusCodes.OK).json({
         message:'Seller orders',
-        order
+        orders
     })
 }
 const buyerOrders = async(req,res)=>{
-    const order = await getOrdersByBuyerId(req.params.buyerId);
+    const orders = await getOrdersByBuyerId(req.params.buyerId);
     res.status(StatusCodes.OK).json({
         message:'buyer orders',
-        order
+        orders
     })
 }
 
