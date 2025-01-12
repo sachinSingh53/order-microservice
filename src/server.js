@@ -6,8 +6,8 @@ import cors from 'cors';
 import compression from 'compression';
 import bodyParser from 'body-parser';
 
-import { winstonLogger } from '../../9-jobber-shared/src/logger.js';
-import { CustomError } from '../../9-jobber-shared/src/errors.js';
+import { winstonLogger } from '@sachinsingh53/jobber-shared';
+import { CustomError } from '@sachinsingh53/jobber-shared';
 import { appRoutes } from './routes.js';
 import { checkConnection } from './elasticsearch.js';
 import { createConnection } from './queues/connection.js';
@@ -16,7 +16,7 @@ import { consumerReviewFanoutMessages } from './queues/order-consumer.js';
 
 
 
-const log = winstonLogger('OrderServer', 'debug');
+const log = winstonLogger(`${config.ELASTIC_SEARCH_URL}`,'OrderServer', 'debug');
 
 function securityMiddleware(app) {
     app.set('trust proxy', 1);

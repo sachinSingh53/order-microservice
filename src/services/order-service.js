@@ -1,7 +1,7 @@
 import { publishDirectMessage } from '../queues/order-producer.js';
 import { OrderModel } from '../models/order.js'
 import { orderChannel } from '../app.js';
-import { lowerCase } from '../../../9-jobber-shared/src/helper.js';
+import { lowerCase } from '@sachinsingh53/jobber-shared';
 import config from '../config.js';
 import { sendNotification } from './notification-service.js';
 

@@ -1,8 +1,9 @@
-import { winstonLogger } from '../../../9-jobber-shared/src/logger.js'
+import { winstonLogger } from '@sachinsingh53/jobber-shared'
 import { updateOrderReview } from '../services/order-service.js';
 import { createConnection } from './connection.js'
+import config from '../config.js';
 
-const log = winstonLogger('orderServiceProducer', 'debug');
+const log = winstonLogger(`${config.ELASTIC_SEARCH_URL}`,'orderServiceProducer', 'debug');
 
 const consumerReviewFanoutMessages = async(channel)=>{
     try {

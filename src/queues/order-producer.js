@@ -1,7 +1,8 @@
-import { winstonLogger } from '../../../9-jobber-shared/src/logger.js'
+import config from '../config.js';
+import { winstonLogger } from '@sachinsingh53/jobber-shared'
 import { createConnection } from './connection.js'
 
-const log = winstonLogger('orderServiceProducer', 'debug');
+const log = winstonLogger(`${config.ELASTIC_SEARCH_URL}`,'orderServiceProducer', 'debug');
 
 async function publishDirectMessage(channel, exchangeName, routingKey, message, logMessage) {
     try {

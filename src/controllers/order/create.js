@@ -2,7 +2,7 @@ import Stripe from 'stripe';
 import config from '../../config.js'
 import{StatusCodes} from 'http-status-codes';
 import{orderSchema} from '../../schemes/order.js'
-import { BadRequestError } from '../../../../9-jobber-shared/src/errors.js';
+import { BadRequestError } from '@sachinsingh53/jobber-shared';
 import{createOrder} from '../../services/order-service.js'
 const stripe = new Stripe(config.STRIPE_API_KEY);
 

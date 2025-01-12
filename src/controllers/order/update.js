@@ -2,11 +2,10 @@ import Stripe from 'stripe';
 import config from '../../config.js'
 import{StatusCodes} from 'http-status-codes';
 import { approveDeliveryDate, approveOrder, cancelOrder, rejectDeliveryDate, requestDeliveryExtension, sellerDeliverOrder } from '../../services/order-service.js';
-import {} from '../../services/order-service.js'
 import{orderUpdateSchema} from '../../schemes/order.js';
 import crypto from 'crypto';
-import { BadRequestError } from '../../../../9-jobber-shared/src/errors.js';
-import{uploads} from '../../../../9-jobber-shared/src/cloudinaryUploader.js'
+import { BadRequestError } from '@sachinsingh53/jobber-shared';
+import{uploads} from '@sachinsingh53/jobber-shared'
 
 
 
@@ -79,7 +78,6 @@ const deliverOrder = async(req,res)=>{
         file = result?.secure_url;
     }
 
-
     const deliverWork = {
         message:req.body.message,
         file,
@@ -88,8 +86,6 @@ const deliverOrder = async(req,res)=>{
         fileName:req.body.fileName,
 
     }
-
-    
 
     const order = await sellerDeliverOrder(orderId,true,deliverWork);
     res.status(StatusCodes.OK).json({ message: 'Order delivered successfully.', order });
